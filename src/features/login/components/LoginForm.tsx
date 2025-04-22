@@ -9,25 +9,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useLogin from "@/hooks/api/auth/useLogin";
 import useRegister from "@/hooks/api/auth/useRegister";
 import { cn } from "@/lib/utils";
 import { useFormik } from "formik";
 import Link from "next/link";
 
-export function RegisterForm({
+export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const {mutateAsync: register, isPending} = useRegister();
+  const {mutateAsync: login, isPending} = useLogin();
 
   const formik = useFormik({
     initialValues: {
-      name: "",
       password: "",
       email: "",
     },
     onSubmit: async (values) => {
-     await register(values)
+     await login(values)
     },
   });
 
@@ -37,28 +37,12 @@ export function RegisterForm({
         <CardHeader>
           <CardTitle className="text-2xl">Register</CardTitle>
           <CardDescription>
-            Enter your email below to register to your account
+            Enter your data below to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  type="name"
-                  name="name"
-                  placeholder="your name"
-                  required
-                  value={formik.values.name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {!!formik.touched.name && !!formik.errors.name && (
-                  <p className="text-xs text-red-500">{formik.errors.name}</p>
-                )}
-              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -93,13 +77,13 @@ export function RegisterForm({
                 )}
               </div>
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending? "Loading..." : "Register"}
+                {isPending? "Loading..." : "Login"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Have an account?{" "}
-              <Link href="/login" className="underline underline-offset-4">
-                Sign in
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="underline underline-offset-4">
+                Sign up
               </Link>
             </div>
           </form>
