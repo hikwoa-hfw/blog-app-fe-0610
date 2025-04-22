@@ -13,6 +13,7 @@ import useRegister from "@/hooks/api/auth/useRegister";
 import { cn } from "@/lib/utils";
 import { useFormik } from "formik";
 import Link from "next/link";
+import { RegisterSchema } from "../schemas";
 
 export function RegisterForm({
   className,
@@ -26,6 +27,7 @@ export function RegisterForm({
       password: "",
       email: "",
     },
+    validationSchema: RegisterSchema,
     onSubmit: async (values) => {
      await register(values)
     },
