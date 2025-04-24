@@ -7,18 +7,24 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const useForgotPassword = () => {
+const useResetPassword = (token: string) => {
   const router = useRouter();
   return useMutation({
-    mutationFn: async (payload: Pick<User, "email">) => {
-      const { data } = await axiosInstance.post(
-        "/auth/forgot-password",
+    mutationFn: async (payload: Pick<User, "password">) => {
+      const { data } = await axiosInstance.patch(
+        "/auth/reset-password",
         payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       return data;
     },
     onSuccess: (data) => {
       toast.success("Send email success, please check your email");
+      router.push("/login")
     },
     onError: (error: AxiosError<any>) => {
       toast.error(error.response?.data.message);
@@ -26,4 +32,4 @@ const useForgotPassword = () => {
   });
 };
 
-export default useForgotPassword;
+export default useResetPassword;
