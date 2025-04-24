@@ -10,10 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useForgotPassword from "@/hooks/api/auth/useForgotPassword";
-import useLogin from "@/hooks/api/auth/useLogin";
 import { cn } from "@/lib/utils";
 import { useFormik } from "formik";
-import Link from "next/link";
 import { ForgotPasswordSchema } from "../schema";
 
 export function ForgotPasswordForm({
