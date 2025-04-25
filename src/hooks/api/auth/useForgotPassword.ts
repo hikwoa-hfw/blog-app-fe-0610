@@ -4,11 +4,9 @@ import { axiosInstance } from "@/lib/axios";
 import { User } from "@/types/user";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const useForgotPassword = () => {
-  const router = useRouter();
   return useMutation({
     mutationFn: async (payload: Pick<User, "email">) => {
       const { data } = await axiosInstance.post(
