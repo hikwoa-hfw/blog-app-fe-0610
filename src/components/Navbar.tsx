@@ -11,7 +11,7 @@ const Navbar = () => {
     clearAuth();
     router.push("/login");
   };
-
+  
   return (
     <nav className="bg-slate-400">
       <div className="container mx-auto px-4">
