@@ -1,21 +1,16 @@
 import { Editor } from "@tiptap/react";
-import {
-  Bold,
-  Heading1,
-  Heading2,
-  Heading3,
-  Italic,
-  Strikethrough,
-} from "lucide-react";
+import { Bold, Heading1, Heading2, Heading3, Heading4, Italic, List, Strikethrough, Underline } from "lucide-react";
 import { FC } from "react";
 import { Toggle } from "./ui/toggle";
 
-interface TipTapMenuBarProps {
+interface TiptapMenuBarProps {
   editor: Editor | null;
 }
 
-const TipTapMenuBar: FC<TipTapMenuBarProps> = ({ editor }) => {
-  if (!editor) return null;
+const TiptapMenuBar: FC<TiptapMenuBarProps> = ({ editor }) => {
+  if (!editor) {
+    return null;
+  }
 
   const options = [
     {
@@ -26,12 +21,17 @@ const TipTapMenuBar: FC<TipTapMenuBarProps> = ({ editor }) => {
     {
       icon: <Heading2 className="size-4" />,
       onclick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-      pressed: editor.isActive("heading", { level: 2 }),
+      pressed: editor.isActive("heading", { level: 1 }),
     },
     {
       icon: <Heading3 className="size-4" />,
       onclick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
-      pressed: editor.isActive("heading", { level: 3 }),
+      pressed: editor.isActive("heading", { level: 1 }),
+    },
+    {
+      icon: <Heading4 className="size-4" />,
+      onclick: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
+      pressed: editor.isActive("heading", { level: 1 }),
     },
     {
       icon: <Bold className="size-4" />,
@@ -48,15 +48,21 @@ const TipTapMenuBar: FC<TipTapMenuBarProps> = ({ editor }) => {
       onclick: () => editor.chain().focus().toggleStrike().run(),
       pressed: editor.isActive("strike"),
     },
+    {
+      icon: <List className="size-4" />,
+      onclick: () => editor.chain().focus().toggleBulletList().run(),
+      pressed: editor.isActive("underline"),
+    },
   ];
+
   return (
-    <div className="space-x-2 rounded-md border p-1 mb-1">
+    <div className="space-x-2 rounded-t-md border p-1">
       {options.map((option, index) => {
         return (
           <Toggle
             key={index}
             pressed={option.pressed}
-            onPressedChange={option.onclick}
+            onClick={() => option.onclick()}
           >
             {option.icon}
           </Toggle>
@@ -66,4 +72,4 @@ const TipTapMenuBar: FC<TipTapMenuBarProps> = ({ editor }) => {
   );
 };
 
-export default TipTapMenuBar;
+export default TiptapMenuBar;

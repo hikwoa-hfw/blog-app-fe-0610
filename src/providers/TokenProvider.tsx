@@ -1,12 +1,13 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth";
-import React, { FC, PropsWithChildren, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 import { fromUnixTime, isAfter } from "date-fns";
+import { jwtDecode } from "jwt-decode";
+import { signOut, useSession } from "next-auth/react";
+import { FC, PropsWithChildren, useEffect } from "react";
 
 const TokenProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { accessToken, clearAuth } = useAuthStore();
+  const session = useSession();
+  const accessToken = session.data?.user.accessToken;
 
   useEffect(() => {
     const checkTokenValidity = () => {
@@ -16,17 +17,17 @@ const TokenProvider: FC<PropsWithChildren> = ({ children }) => {
           const tokenExpiry = fromUnixTime(decodedToken.exp!);
 
           if (isAfter(new Date(), tokenExpiry)) {
-            clearAuth();
+            signOut();
           }
         } catch (error) {
-          clearAuth();
+          signOut();
         }
       }
     };
 
-    const interval = setInterval(checkTokenValidity, 15000)
+    const interval = setInterval(checkTokenValidity, 15000);
 
-    return ()=> clearInterval(interval)
+    return () => clearInterval(interval);
   }, []);
   return <>{children}</>;
 };
