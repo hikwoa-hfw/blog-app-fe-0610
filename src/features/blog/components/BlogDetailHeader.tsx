@@ -12,6 +12,7 @@ interface BlogDetailHeaderProps {
 }
 const BlogDetailHeader: FC<BlogDetailHeaderProps> = ({ blog }) => {
   const session = useSession();
+console.log(session);
 
   const { mutateAsync: deleteBlog, isPending } = useDeleteBlog();
   const handleDeleteBlog = async () => {

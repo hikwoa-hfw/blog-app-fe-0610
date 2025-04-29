@@ -19,6 +19,7 @@ const useLogin = () => {
     },
     onSuccess: async (data) => {
       await signIn("credentials", { ...data, redirect: false });
+      // await signIn("credentials", { ...data, accessToken: data.accessToken, redirect: false }); kalau bentuk return BE nya ada message,accesstoken, user
       toast.success("Login Success");
 
       router.push("/");
