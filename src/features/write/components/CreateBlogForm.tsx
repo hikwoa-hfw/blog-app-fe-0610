@@ -10,6 +10,7 @@ import { CreateBlogSchema } from "../schemas";
 import { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 
 const CreateBlogForm = () => {
   const { mutateAsync: createBlog, isPending } = useCreateBlog();
@@ -112,19 +113,23 @@ const CreateBlogForm = () => {
       />
 
       {selectedImage ? (
-        <>
-          <div className="relative h-[150px] w-[200px]">
-            <Image
-              src={selectedImage}
-              alt="thumbnail"
-              className="object-cover"
-              fill
-            />
-          </div>
-          <Button type="button" onClick={removeThumbnail} variant="destructive">
-            Remove
+        <div className="relative h-[150px] w-[200px]">
+          <Image
+            src={selectedImage}
+            alt="thumbnail"
+            className="object-cover"
+            fill
+          />
+          <Button
+            className="absolute -top-2 -right-2 rounded-full"
+            type="button"
+            size="icon"
+            onClick={removeThumbnail}
+            variant="destructive"
+          >
+            <Trash2/>
           </Button>
-        </>
+        </div>
       ) : (
         <div className="grid gap-2">
           <Label htmlFor="thumbnail">thumbnail</Label>
