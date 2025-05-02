@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import NoData from "@/components/NoData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,7 +64,7 @@ const EditBlogForm: FC<EditBlogFormProps> = ({ slug }) => {
   };
 
   if (isPendingGetBlog) {
-    return <Loader2 className="animate-spin" />;
+    return <Loading />;
   }
 
   if (!blog) {
@@ -72,7 +73,7 @@ const EditBlogForm: FC<EditBlogFormProps> = ({ slug }) => {
 
   if (blog.userId !== Number(session.data?.user.id)) return <Unauthorized />;
 
-  
+
   return (
     <form className="mt-10 space-y-4" onSubmit={formik.handleSubmit}>
       <div className="grid gap-2">
