@@ -1,10 +1,13 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import ModalDeleteBlog from "@/features/blog/components/ModalDeleteBlog";
 import useDeleteBlog from "@/hooks/api/blogs/useDeleteBlog";
 import { Blog } from "@/types/blog";
 import { format } from "date-fns";
+import { Edit } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 
 interface BlogDetailHeaderProps {
@@ -12,7 +15,7 @@ interface BlogDetailHeaderProps {
 }
 const BlogDetailHeader: FC<BlogDetailHeaderProps> = ({ blog }) => {
   const session = useSession();
-console.log(session);
+  console.log(session);
 
   const { mutateAsync: deleteBlog, isPending } = useDeleteBlog();
   const handleDeleteBlog = async () => {
@@ -32,7 +35,14 @@ console.log(session);
           {format(new Date(blog.createdAt), "dd MM yyyy")}- {blog.user?.name}
         </p>
         {Number(session.data?.user?.id) === blog.userId && (
-          <ModalDeleteBlog isPending={isPending} onClick={handleDeleteBlog} />
+          <div className="space-x-1">
+            <Link href={`/blogs/${blog.slug}/edit`}>
+              <Button variant="outline" size="icon">
+                <Edit/>
+              </Button>
+            </Link>
+            <ModalDeleteBlog isPending={isPending} onClick={handleDeleteBlog} />
+          </div>
         )}
       </div>
       <div className="relative h-[240px] md:h-[360px]">
