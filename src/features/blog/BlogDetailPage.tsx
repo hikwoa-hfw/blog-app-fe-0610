@@ -1,4 +1,6 @@
 "use client";
+import Loading from "@/components/Loading";
+import NoData from "@/components/NoData";
 import BlogDetailBody from "@/features/blog/components/BlogDetailBody";
 import BlogDetailHeader from "@/features/blog/components/BlogDetailHeader";
 import useGetBlogBySlug from "@/hooks/api/blogs/useGetBlogBySlug";
@@ -11,10 +13,10 @@ const BlogDetailPage: FC<BlogDetailPageProps> = ({ slug }) => {
   const { data: blog, isPending } = useGetBlogBySlug(slug);
   console.log(blog);
   if (isPending) {
-    return <h1 className="text-center">Loading</h1>;
+    return <Loading/>;
   }
   if (!blog) {
-    return <h1 className="text-center">No Data</h1>;
+    return <NoData/>;
   }
 
   return (

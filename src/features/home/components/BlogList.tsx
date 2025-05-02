@@ -6,6 +6,7 @@ import PaginationSection from "@/components/Pagination";
 import {parseAsInteger, useQueryState} from 'nuqs'
 import { Input } from "@/components/ui/input";
 import { useDebounceValue } from "usehooks-ts";
+import Loading from "@/components/Loading";
 
 const BlogList = () => {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
@@ -35,7 +36,7 @@ const BlogList = () => {
       />
       {isPending && (
         <div className="flex h-[30vh] items-center justify-center">
-          <h2>Loading...</h2>
+          <Loading/>
         </div>
       )}
 
