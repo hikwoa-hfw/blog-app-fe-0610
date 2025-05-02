@@ -164,8 +164,8 @@ const EditBlogForm: FC<EditBlogFormProps> = ({ slug }) => {
         </div>
       )}
       <div className="flex justify-end">
-        <Button className="my-10" type="submit">
-          submit
+        <Button className="my-10" type="submit" disabled={isPendingUpdateBlog || !formik.dirty}>
+          {isPendingUpdateBlog? "loading" : "submit"}
         </Button>
       </div>
     </form>
